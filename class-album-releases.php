@@ -97,11 +97,11 @@ class Album_Releases {
 			'publicly_queryable' => true,
 			'show_ui' => true,
 			'query_var' => true,
-			'rewrite' => array("slug" => "releases"),
+			'rewrite' => array("slug" => "album"),
 			'capability_type' => 'post',
 			'hierarchical' => false,
 			'menu_position' => null,
-			'supports' => array( 'title','editor', ),
+			'supports' => array( 'title', 'editor', 'thumbnail' ),
 			'exclude_from_search' => false
 	  );
 
