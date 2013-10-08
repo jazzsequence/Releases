@@ -74,18 +74,18 @@ class Album_Releases {
 	/* create the custom post type */
 	public function post_type_releases() {
 	    $labels = array(
-			'name' => _x('Album Releases', 'post type general name'),
-			'singular_name' => _x('Album', 'post type singular name'),
-			'add_new' => _x('Add New', 'product'),
-			'add_new_item' => __('Add New Album'),
-			'edit_item' => __('Edit Album'),
-			'edit' => _x('Edit', 'releases'),
-			'new_item' => __('New Album'),
-			'view_item' => __('View Album'),
-			'search_items' => __('Search Album Releases'),
-			'not_found' =>  __('No releases found'),
-			'not_found_in_trash' => __('No releases found in Trash'),
-			'view' =>  __('View Album Release'),
+			'name' => _x('Releases', 'post type general name', 'plague-releases'),
+			'singular_name' => _x('Album', 'post type singular name', 'plague-releases'),
+			'add_new' => _x('Add New', 'product', 'plague-releases'),
+			'add_new_item' => __('Add New Album', 'plague-releases'),
+			'edit_item' => __('Edit Album', 'plague-releases'),
+			'edit' => __('Edit', 'plague-releases'),
+			'new_item' => __('New Album', 'plague-releases'),
+			'view_item' => __('View Album', 'plague-releases'),
+			'search_items' => __('Search Album Releases', 'plague-releases'),
+			'not_found' =>  __('No album releases found', 'plague-releases'),
+			'not_found_in_trash' => __('No album releases found in Trash', 'plague-releases'),
+			'view' =>  __('View Album Release', 'plague-releases'),
 			'parent_item_colon' => ''
 	  );
 		$args = array(
@@ -107,16 +107,16 @@ class Album_Releases {
 
 
 	public function releases_taxonomies() {
-		register_taxonomy( 'genre', 'releases', array( 'hierarchical' => true, 'label' => __('Genre', 'taxonomy general name'), 'query_var' => 'genre', 'rewrite' => array( 'slug' => 'genre' ) ) ); // this is the genre taxonomy for album releases
+		register_taxonomy( 'genre', 'releases', array( 'hierarchical' => true, 'label' => __('Genre', 'plague-releases'), 'query_var' => 'genre', 'rewrite' => array( 'slug' => 'genre' ) ) ); // this is the genre taxonomy for album releases
 			$artist_labels = array(
-				'name' => __( 'Artists' ),
-				'singular_name' => __( 'Artists' ),
-				'search_items' => __( 'Search Artists' ),
-				'all_items' => __( 'All Artists' ),
-				'edit_item' => __( 'Edit Artist' ),
-				'update_item' => __( 'Update Artist' ),
-				'add_new_item' => __( 'Add New Artist' ),
-				'new_item_name' => __( 'New Artist Name' ),
+				'name' => __( 'Artists', 'plague-releases' ),
+				'singular_name' => __( 'Artists', 'plague-releases' ),
+				'search_items' => __( 'Search Artists', 'plague-releases' ),
+				'all_items' => __( 'All Artists', 'plague-releases' ),
+				'edit_item' => __( 'Edit Artist', 'plague-releases' ),
+				'update_item' => __( 'Update Artist', 'plague-releases' ),
+				'add_new_item' => __( 'Add New Artist', 'plague-releases' ),
+				'new_item_name' => __( 'New Artist Name', 'plague-releases' ),
 			);
 		register_taxonomy( 'artist', 'releases', array( 'hierarchical' => true, 'labels' => $artist_labels, 'query_var' => 'artist', 'rewrite' => array( 'slug' => 'artist' ) ) ); // this is the artist taxonomy for releases
 		}
@@ -135,118 +135,68 @@ class Album_Releases {
 		echo '<input type="hidden" name="releases_noncename" id="releases_noncename" value="' .
 		wp_create_nonce( plugin_basename(__FILE__) ) . '" />';
 
-	   	echo '<label for="album_art">Album Art</label><br />';
 
-		//ajax upload
-		$wud = wp_upload_dir();
+		echo '<p><label for="url_to_buy">' . __( 'URL to purchase album', 'plague-releases' ) . '</label><br />';
+		echo '<input class="widefat" type="text" name="url_to_buy" value="'. mysql_real_escape_string( get_post_meta($post->ID, 'url_to_buy ', true ) ) . '" /></p>';
+		echo '<p><label for="tracklist">' . __( 'Track List', 'plague-releases' ) . '</label><br />';
+		wp_editor( wp_kses_post( get_post_meta( $post->ID, 'tracklist', true ) ), 'tracklist', array( 'teeny' => true, 'media_buttons' => false, 'textarea_rows' => 5, 'quicktags' => false ) );
+		echo '</p>';
 
-	?>
+		$kses_allowed = array_merge(wp_kses_allowed_html( 'post' ), array('iframe' => array(
+			'src' => array(),
+			'style' => array(),
+			'width' => array(),
+			'height' => array(),
+			'scrolling' => array(),
+			'frameborder' => array()
+			)));
 
-			<script type="text/javascript">
-			jQuery(document).ready(function($) {
-				var uploader = new qq.FileUploader({
-					element: document.getElementById('album_art_upload'),
-					action: '<?php echo get_bloginfo('siteurl'); ?>/',
-					onComplete: function (id,fileName,responseJSON) {
-						if(responseJSON.success == true)
-							jQuery('#album_art').val('<?php echo $wud["url"]; ?>/'+fileName);
-					}
-				});
-			});
-			</script>
-		<input style="width: 55%;" id="album_art" name="album_art" value="<?php echo get_post_meta($post->ID, 'album_art', true); ?>" type="text" /><div id="album_art_upload"></div>
-		<?php
+		echo '<p><label for="embed_code">' . __( 'Player Embed Code', 'plague-releases' ) . '</label><br />';
+		echo '<textarea class="widefat" rows="5" cols="50" name="embed_code" />'. wp_kses( get_post_meta( $post->ID, 'embed_code', true ), $kses_allowed ) . '</textarea></p>';
 
+		echo '<p><label for="release_date">' . __( 'Album Release Date', 'plague-releases' ) . '</label><br />';
+		echo '<input class="widefat" type="text" name="release_date" value="' . wp_kses_post( get_post_meta($post->ID, 'release_date', true ) ) . '" /></p>';
+		echo '<p><label for="plague_release_number">' . __( 'Release Number <em>(if applicable)</em>', 'plague-releases' ) . '</label><br />';
+		echo '<input class="widefat" type="text" name="plague_release_number" value"'. wp_kses( get_post_meta( $post->ID, 'plague_release_number', true ), array() ) . '" /></p>';
 
-		echo '<label for="url_to_buy">URL to purchase album</label><br />';
-		echo '<input style="width: 55%;" type="text" name="url_to_buy" value="'.get_post_meta($post->ID, 'url_to_buy', true).'" /><br /><br />';
-		echo '<label for="tracklist">Track List (HTML is <em>not</em> allowed.)</label><br />';
-		echo '<textarea style="width: 55%;" rows="5" cols="50" name="tracklist" />'.htmlspecialchars(get_post_meta($post->ID, 'tracklist', true)).'</textarea><br /><br />';
-
-		echo '<label for="embed_code">Player Embed Code</label><br />';
-		echo '<textarea style="width: 55%;" rows="5" cols="50" name="embed_code" />'.htmlspecialchars(get_post_meta($post->ID, 'embed_code', true)).'</textarea><br />(HTML is (obviously) allowed here.  However, if you embed anything other than a valid embed code for your player (like malicious scripts, iframes to anything other than a music player, gratuitous fancypants code, etc.), your account will be banned, you will be blacklisted from the site with no refund, and we will hunt you down with wolves and slaughter you in your sleep.  Don\'t do it.)<br />';
-
-		echo '<label for="release_date">Album Release Date</label><br />';
-		echo '<input style="width: 55%;" type="text" name="release_date" value="'.get_post_meta($post->ID, 'release_date', true).'" /><br /><br />';
-		echo '<label for="plague_release_number">Plague Music Release number <em>(if applicable)</em></label><br />';
-		echo '<input style="width: 55%;" type="text" name="plague_release_number" value"'.get_post_meta($post->ID, 'plague_release_number', true).'" /><br />';
-
-		if (get_post_meta($post->ID,'plague_release_number')) { $plague_release = get_post_meta($post->ID,'plague_release_number',true); } else { $plague_release = 'PLAGUE000'; };
-		echo '<p><label for="internet_archive">Archive.org Release Identifier</label><br />';
-		echo '<input style="width: 55%;" type="text" name="internet_archive" value="'.get_post_meta($post->ID,'internet_archive', true).'" /><br />';
-		echo 'If the release is posted in the Internet Archive, add the Plague Release number or other release identifier here, e.g. if the URL to your release is http://archive.org/details/'.$plague_release.', enter '.$plague_release.' here.';
+		if ( get_post_meta($post->ID,'plague_release_number') ) { $plague_release = get_post_meta($post->ID,'plague_release_number',true); } else { $plague_release = 'PLAGUE000'; };
+		echo '<p><label for="internet_archive">' . __( 'Archive.org Release Identifier', 'plague-releases' ) . '</label><br />';
+		echo '<input class="widefat" type="text" name="internet_archive" value="' . wp_kses( get_post_meta($post->ID,'internet_archive', true ), array() ) . '" /><br />';
+		echo sprintf( __( 'If the release is posted in the Internet Archive, add the Release Number or other release identifier here, e.g. if the URL to your release is http://archive.org/details/%1$s, enter %1$s here.', 'plague-releases' ), $plague_release );
 
 	}
 
-	function meta_cpt_releases_buy() {
+	public function meta_cpt_releases_buy() {
 	  global $post;
 
 		echo '<input type="hidden" name="releases_noncename" id="releases_noncename" value="' .
 		wp_create_nonce( plugin_basename(__FILE__) ) . '" />';
 
-		echo '<p><label for="bandcamp_url">Bandcamp URL</label><br />';
-		echo '<input style="width: 100%;" type="text" name="bandcamp_url" value="'.get_post_meta($post->ID,'bandcamp_url',true).'" /></p>';
-		echo '<p><label for="itunes_url">iTunes URL</label><br />';
-		echo '<input style="width: 100%;" type="text" name="itunes_url" value="'.get_post_meta($post->ID,'itunes_url',true).'" /></p>';
-		echo '<p><label for="spotify_url">Spotify URL</label><br />';
-		echo '<input style="width: 100%;" type="text" name="spotify_url" value="'.get_post_meta($post->ID,'spotify_url',true).'" /></p>';
-		echo '<p><label for="amazonmp3_url">AmazonMP3 URL</label><br />';
-		echo '<input style="width: 100%;" type="text" name="amazonmp3_url" value="'.get_post_meta($post->ID,'amazonmp3_url',true).'" /></p>';
-		echo '<p><label for="zune_url">Zune URL</label><br />';
-		echo '<input style="width: 100%;" type="text" name="zune_url" value="'.get_post_meta($post->ID,'zune_url',true).'" /></p>';
-		echo '<p><label for="emusic_url">eMusic URL</label><br />';
-		echo '<input style="width: 100%;" type="text" name="emusic_url" value="'.get_post_meta($post->ID,'emusic_url',true).'" /></p>';
-		echo '<p><label for="napster_url">Napster URL</label><br />';
-		echo '<input style="width: 100%;" type="text" name="napster_url" value="'.get_post_meta($post->ID,'napster_url',true).'" /></p>';
-		echo '<p><label for="rhapsody_url">Rhapsody URL</label><br />';
-		echo '<input style="width: 100%;" type="text" name="rhapsody_url" value="'.get_post_meta($post->ID,'rhapsody_url',true).'" /></p>';
-		echo '<p><label for="reverbnation_buy_url">Reverbnation URL</label><br />';
-		echo '<input style="width: 100%;" type="text" name="reverbnation_buy_url" value="'.get_post_meta($post->ID,'reverbnation_buy_url',true).'" /></p>';
+		echo '<p><label for="bandcamp_url">' . __( 'Bandcamp URL', 'plague-releases' ) . '</label><br />';
+		echo '<input class="widefat" type="text" name="bandcamp_url" value="'. mysql_real_escape_string( get_post_meta($post->ID,'bandcamp_url', true ) ) . '" /></p>';
+		echo '<p><label for="itunes_url">' . __( 'iTunes URL', 'plague-releases' ) . '</label><br />';
+		echo '<input class="widefat" type="text" name="itunes_url" value="'. mysql_real_escape_string( get_post_meta($post->ID,'itunes_url', true ) ) . '" /></p>';
+		echo '<p><label for="spotify_url">' . __( 'Spotify URL', 'plague-releases' ) . '</label><br />';
+		echo '<input class="widefat" type="text" name="spotify_url" value="'. mysql_real_escape_string( get_post_meta($post->ID,'spotify_url', true ) ) . '" /></p>';
+		echo '<p><label for="amazonmp3_url">' . __( 'AmazonMP3 URL', 'plague-releases' ) . '</label><br />';
+		echo '<input class="widefat" type="text" name="amazonmp3_url" value="'. mysql_real_escape_string( get_post_meta($post->ID,'amazonmp3_url', true ) ) . '" /></p>';
+		echo '<p><label for="zune_url">' . __( 'Zune URL', 'plague-releases' ) . '</label><br />';
+		echo '<input class="widefat" type="text" name="zune_url" value="'. mysql_real_escape_string( get_post_meta($post->ID,'zune_url', true ) ) . '" /></p>';
+		echo '<p><label for="emusic_url">' . __( 'eMusic URL', 'plague-releases' ) . '</label><br />';
+		echo '<input class="widefat" type="text" name="emusic_url" value="'. mysql_real_escape_string( get_post_meta($post->ID,'emusic_url', true ) ) . '" /></p>';
+		echo '<p><label for="napster_url">' . __( 'Napster URL', 'plague-releases' ) . '</label><br />';
+		echo '<input class="widefat" type="text" name="napster_url" value="'. mysql_real_escape_string( get_post_meta($post->ID,'napster_url', true ) ) . '" /></p>';
+		echo '<p><label for="rhapsody_url">' . __( 'Rhapsody URL', 'plague-releases' ) . '</label><br />';
+		echo '<input class="widefat" type="text" name="rhapsody_url" value="'. mysql_real_escape_string( get_post_meta($post->ID,'rhapsody_url', true ) ) . '" /></p>';
+		echo '<p><label for="reverbnation_buy_url">' . __( 'Reverbnation URL', 'plague-releases' ) . '</label><br />';
+		echo '<input class="widefat" type="text" name="reverbnation_buy_url" value="'. mysql_real_escape_string( get_post_meta($post->ID,'reverbnation_buy_url', true ) ) . '" /></p>';
 	}
-
-	/* deal with uploading image */
-	if(isset ($_GET["qqfile"]) && strlen($_GET["qqfile"]))
-	{
-		$pluginurl = WP_PLUGIN_URL . '/' . plugin_basename(dirname(__FILE__));
-		include(WP_PLUGIN_DIR . '/' . plugin_basename(dirname(__FILE__)) . '/' . 'includes/upload.php');
-		$wud = wp_upload_dir();
-
-		/* list of valid extensions */
-		$allowedExtensions = array('jpg', 'jpeg', 'gif', 'png', 'ico');
-
-		/* max file size in bytes */
-		$sizeLimit = 6 * 1024 * 1024;
-
-		$uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
-		$result = $uploader->handleUpload($wud['path'].'/',true);
-
-		echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
-		exit;
-	}
-
-
-	function releases_uploader_scripts() {
-
-		$pluginurl = WP_PLUGIN_URL . '/' . plugin_basename(dirname(__FILE__));
-
-		wp_enqueue_script('fileuploader', $pluginurl.'/includes/fileuploader.js',array('jquery'));
-		wp_enqueue_style('fileuploadercss',$pluginurl.'/css/fileuploader.css');
-	}
-
-	function releases_uploader_styles() {
-		$pluginurl = WP_PLUGIN_URL . '/' . plugin_basename(dirname(__FILE__));
-
-		wp_enqueue_style('thickbox');
-		wp_enqueue_style('fileuploadercss', $pluginurl.'/css/fileuploader.css');
-	}
-
-	add_action('admin_print_scripts', 'releases_uploader_scripts');
-	add_action('admin_print_styles', 'releases_uploader_styles');
 
 	/* When the post is saved, saves our product data */
-	function releases_save_product_postdata($post_id, $post) {
-	   	if ( !wp_verify_nonce( $_POST['releases_noncename'], plugin_basename(__FILE__) )) {
-		return $post->ID;
+	public function releases_save_product_postdata($post_id, $post) {
+		$nonce = isset( $_POST['reviews_noncename'] ) ? $_POST['reviews_noncename'] : 'all the pigs, all lined up';
+		if ( !wp_verify_nonce( $nonce, plugin_basename(__FILE__) )) {
+			return $post->ID;
 		}
 
 		/* confirm user is allowed to save page/post */
