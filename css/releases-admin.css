@@ -1,0 +1,55 @@
+#reviews-details label {
+	font-weight: bold;
+	font-size: 1.0em;
+}
+
+#reviews-details .embed_code {
+	width: 55%;
+	font-family: monospace;
+}
+
+#wp-tracklist-editor-container {
+	background: #fff;
+}
+
+#menu-posts-releases .wp-menu-image {
+	background: none!important;
+}
+#menu-posts-releases .wp-menu-image:before {
+	font-family: 'plague-fonts'!important;
+	content: "\e010";
+	font-size: 20px;
+	position: relative;
+	left: 5px;
+	top: 4px;
+	text-shadow: 1px 1px 0px #eee;
+	color: #aaa;
+}
+#menu-posts-releases:hover .wp-menu-image:before {
+	color: #21759b;
+}
+.wp-has-current-submenu#menu-posts-releases .wp-menu-image:before {
+	color: #eee;
+}
+.wp-has-current-submenu#menu-posts-releases .wp-menu-image:before {
+	text-shadow: 1px 1px 0px #555;
+}
+div#icon-edit.icon32-posts-releases {
+	background-image: none;
+}
+div#icon-edit.icon32-posts-releases:after {
+	font-family: 'plague-fonts'!important;
+	content: "\e010";
+	color: #555;
+	font-size: 32px;
+	position: relative;
+	top: -5px;
+}
+
+.mp6 #adminmenu #menu-posts-releases div.wp-menu-image:before {
+	font-family: 'plague-fonts'!important;
+	content: "\e010";
+	left: 0;
+	top: 0;
+	text-shadow: none;
+}
