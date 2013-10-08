@@ -51,6 +51,9 @@ class Album_Releases {
 		add_action( 'init', array( $this, 'post_type_releases' ), 0 );
 		add_action( 'init', array( $this, 'releases_taxonomies' ), 0 ); // taxonomy for genre
 		add_action( 'admin_menu', array( $this, 'custom_meta_boxes_releases' ) );
+		add_action( 'save_post', array( $this, 'releases_save_product_postdata' ), 1, 2 ); // save the custom fields
+		add_filter( 'manage_edit-releases_columns', array( $this, 'releases_edit_release_columns' ) );
+		add_action( 'manage_releases_posts_custom_column', array( $this, 'releases_manage_release_columns' ), 10, 2 );
 
 	}
 
@@ -125,8 +128,8 @@ class Album_Releases {
 	/* create custom meta boxes */
 
 	public function custom_meta_boxes_releases() {
-	    add_meta_box("releases-details", "Album Details", "meta_cpt_releases", "releases", "normal", "low");
-		add_meta_box("releases-buy","Purchase Links","meta_cpt_releases_buy","releases","side","low");
+	    add_meta_box("releases-details",  __( "Album Details", 'plague-releases' ),  array( $this, "meta_cpt_releases" ), "releases", "normal", "low");
+		add_meta_box("releases-buy", __( "Purchase Links", 'plague-releases' ), array( $this, "meta_cpt_releases_buy" ),"releases","side","low");
 	}
 
 	public function meta_cpt_releases() {
