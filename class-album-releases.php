@@ -164,11 +164,16 @@ class Album_Releases {
 		echo '<p><label for="release_date">' . __( 'Album Release Date', 'plague-releases' ) . '</label><br />';
 		echo '<input class="widefat" type="text" name="release_date" value="' . wp_kses_post( get_post_meta($post->ID, 'release_date', true ) ) . '" /></p>';
 		echo '<p><label for="plague_release_number">' . __( 'Release Number <em>(if applicable)</em>', 'plague-releases' ) . '</label><br />';
-		echo '<input class="widefat" type="text" name="plague_release_number" value"'. wp_kses( get_post_meta( $post->ID, 'plague_release_number', true ), array() ) . '" /></p>';
+		echo '<input class="widefat" type="text" name="plague_release_number" value="' . wp_kses( get_post_meta( $post->ID, 'plague_release_number', true ), array() ) . '" /></p>';
 
-		if ( get_post_meta($post->ID,'plague_release_number') ) { $plague_release = get_post_meta($post->ID,'plague_release_number',true); } else { $plague_release = 'PLAGUE000'; };
+		if ( get_post_meta( $post->ID, 'plague_release_number', true ) ) {
+			$plague_release = get_post_meta( $post->ID, 'plague_release_number', true );
+		} else {
+			$plague_release = 'PLAGUE000';
+		};
+
 		echo '<p><label for="internet_archive">' . __( 'Archive.org Release Identifier', 'plague-releases' ) . '</label><br />';
-		echo '<input class="widefat" type="text" name="internet_archive" value="' . wp_kses( get_post_meta($post->ID,'internet_archive', true ), array() ) . '" /><br />';
+		echo '<input class="widefat" type="text" name="internet_archive" value="' . wp_kses( get_post_meta( $post->ID, 'internet_archive', true ), array() ) . '" /><br />';
 		echo sprintf( __( 'If the release is posted in the Internet Archive, add the Release Number or other release identifier here, e.g. if the URL to your release is http://archive.org/details/%1$s, enter %1$s here.', 'plague-releases' ), $plague_release );
 
 	}
