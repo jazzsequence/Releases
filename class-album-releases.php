@@ -212,29 +212,55 @@ class Album_Releases {
 		}
 
 		/* ready our data for storage */
-		foreach ($_POST as $key => $value) {
-	        $mydata[$key] = $value;
-	    }
+		$meta_keys = array(
+			'url_to_buy' => 'url',
+			'tracklist' => 'text',
+			'embed_code' => 'embed',
+			'release_date' => 'text',
+			'plague_release_number' => 'text',
+			'internet_archive' => 'text',
+			'bandcamp_url' => 'url',
+			'itunes_url' => 'url',
+			'spotify_url' => 'url',
+			'amazonmp3_url' => 'url',
+			'zune_url' => 'url',
+			'emusic_url' => 'url',
+			'napster_url' => 'url',
+			'rhapsody_url' => 'url',
+			'reverbnation_buy_url' => 'url'
+		);
 
 		/* Add values of $mydata as custom fields */
-		foreach ($mydata as $key => $value) {
-			if( $post->post_type == 'revision' ) return;
-			$value = implode(',', (array)$value);
-			if(get_post_meta($post->ID, $key, FALSE)) {
-				update_post_meta($post->ID, $key, $value);
+		foreach ($meta_keys as $meta_key => $type) {
+			if( $post->post_type == 'revision' )
+				return;
+			if ( isset( $_POST[ $meta_key ] ) ) {
+				if ( $type == 'text' ) {
+					$value = wp_kses_post( $_POST[ $meta_key ] );
+				}
+				if ( $type == 'embed' ) {
+					$kses_allowed = array_merge(wp_kses_allowed_html( 'post' ), array('iframe' => array(
+						'src' => array(),
+						'style' => array(),
+						'width' => array(),
+						'height' => array(),
+						'scrolling' => array(),
+						'frameborder' => array()
+						)));
+					$value = wp_kses( $_POST[ $meta_key ], $kses_allowed );
+				}
+				if ( $type == 'url' ) {
+					$value = htmlspecialchars( $_POST[ $meta_key ] );
+				}
+				update_post_meta( $post->ID, $meta_key, $value );
 			} else {
-				add_post_meta($post->ID, $key, $value);
+				delete_post_meta( $post->ID, $meta_key );
 			}
-			if(!$value) delete_post_meta($post->ID, $key);
 		}
 	}
 
-	add_action('save_post', 'releases_save_product_postdata', 1, 2); // save the custom fields
-
-
 	/* add some custom columns */
-	add_filter('manage_edit-releases_columns','releases_edit_release_columns');
-	function releases_edit_release_columns( $columns ) {
+	public function releases_edit_release_columns( $columns ) {
 		$columns = array(
 			'cb' => '<input type="checkbox" />',
 			'title' => 'Album Release',
