@@ -296,7 +296,7 @@ class Album_Releases {
 			'title' => 'Album Release',
 			'release_date' => 'Release Date',
 			'genre' => 'Genre',
-			'plague_release_number' => 'Plague Release Number'
+			'plague_release_number' => 'Release Number'
 		);
 		return $columns;
 	}
