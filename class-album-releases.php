@@ -54,7 +54,11 @@ class Album_Releases {
 		add_action( 'save_post', array( $this, 'releases_save_product_postdata' ), 1, 2 ); // save the custom fields
 		add_filter( 'manage_edit-releases_columns', array( $this, 'releases_edit_release_columns' ) );
 		add_action( 'manage_releases_posts_custom_column', array( $this, 'releases_manage_release_columns' ), 10, 2 );
-
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_styles') );
+		// Rename "featured image"
+		add_action('admin_head-post-new.php', array($this, 'change_thumbnail_html'));
+		add_action('admin_head-post.php', array($this, 'change_thumbnail_html'));
+		add_action( 'add_meta_boxes', array( $this, 'rebuild_thumbnail_metabox' ) );
 	}
 
 	/**
@@ -195,6 +199,32 @@ class Album_Releases {
 		echo '<input class="widefat" type="text" name="reverbnation_buy_url" value="'. mysql_real_escape_string( get_post_meta($post->ID,'reverbnation_buy_url', true ) ) . '" /></p>';
 	}
 
+	public function rebuild_thumbnail_metabox() {
+		remove_meta_box( 'postimagediv', 'releases', 'side' );
+    	add_meta_box('postimagediv', __('Album Cover', 'plague-releases'), 'post_thumbnail_meta_box', 'releases', 'side', 'default');
+	}
+
+	/**
+	 * Filter for the featured image post box
+	 *
+	 * @since 	2.0.0
+	 */
+	public function change_thumbnail_html( $content ) {
+	    if ('releases' == $GLOBALS['post_type'])
+	      add_filter('admin_post_thumbnail_html', array($this,'do_thumb'));
+	}
+
+	/**
+	 * Replaces "Set featured image" with "Album Book Cover"
+	 *
+	 * @since 	2.0.0
+	 *
+	 * @return 	string 	returns the modified text
+	 */
+	public function do_thumb($content){
+		 return str_replace(__('Set featured image'), __('Select Album Cover', 'plague-releases'),$content);
+	}
+
 	/* When the post is saved, saves our product data */
 	public function releases_save_product_postdata($post_id, $post) {
 		$nonce = isset( $_POST['reviews_noncename'] ) ? $_POST['reviews_noncename'] : 'all the pigs, all lined up';
@@ -314,5 +344,8 @@ class Album_Releases {
 				break;
 		}
 	}
-
+	public function admin_styles() {
+		wp_enqueue_style( 'plague-fonts', plugins_url( 'css/plague-fonts.css', __FILE__ ), array(), $this->version );
+		wp_enqueue_style( 'releases-admin-css', plugins_url( 'css/releases-admin.css', __FILE__ ), array(), $this->version );
+	}
 }
