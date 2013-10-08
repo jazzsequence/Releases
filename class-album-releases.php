@@ -227,7 +227,7 @@ class Album_Releases {
 
 	/* When the post is saved, saves our product data */
 	public function releases_save_product_postdata($post_id, $post) {
-		$nonce = isset( $_POST['reviews_noncename'] ) ? $_POST['reviews_noncename'] : 'all the pigs, all lined up';
+		$nonce = isset( $_POST['releases_noncename'] ) ? $_POST['releases_noncename'] : 'all the pigs, all lined up';
 		if ( !wp_verify_nonce( $nonce, plugin_basename(__FILE__) )) {
 			return $post->ID;
 		}
