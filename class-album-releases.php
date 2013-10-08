@@ -270,9 +270,9 @@ class Album_Releases {
 		);
 		return $columns;
 	}
+
 	/* now we're going to get the data to fill the columns */
-	add_action('manage_releases_posts_custom_column', 'releases_manage_release_columns',10,2);
-	function releases_manage_release_columns( $column, $post_id ) {
+	public function releases_manage_release_columns( $column, $post_id ) {
 		global $post;
 		switch ( $column ) {
 			case 'release_date' :
