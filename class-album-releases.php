@@ -144,7 +144,7 @@ class Album_Releases {
 
 
 		echo '<p><label for="url_to_buy">' . __( 'URL to purchase album', 'plague-releases' ) . '</label><br />';
-		echo '<input class="widefat" type="text" name="url_to_buy" value="'. mysql_real_escape_string( get_post_meta($post->ID, 'url_to_buy ', true ) ) . '" /></p>';
+		echo '<input class="widefat" type="text" name="url_to_buy" value="'. mysql_real_escape_string( get_post_meta($post->ID, 'url_to_buy', true ) ) . '" /></p>';
 		echo '<p><label for="tracklist">' . __( 'Track List', 'plague-releases' ) . '</label><br />';
 		wp_editor( wp_kses_post( get_post_meta( $post->ID, 'tracklist', true ) ), 'tracklist', array( 'teeny' => true, 'media_buttons' => false, 'textarea_rows' => 5, 'quicktags' => false ) );
 		echo '</p>';
