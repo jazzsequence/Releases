@@ -1,13 +1,3 @@
-#reviews-details label {
-	font-weight: bold;
-	font-size: 1.0em;
-}
-
-#reviews-details .embed_code {
-	width: 55%;
-	font-family: monospace;
-}
-
 #wp-tracklist-editor-container {
 	background: #fff;
 }
