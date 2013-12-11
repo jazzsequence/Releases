@@ -386,16 +386,6 @@ class Album_Releases {
 			$the_artist .= '</div>';
 		}
 
-		// get the rating
-		$the_rating = null;
-		if ( get_post_meta( $post->ID, 'review_rating', true ) ) {
-			$rating = get_post_meta( $post->ID, 'review_rating', true );
-			$ratings = $this->ratings();
-			$the_rating = '<div class="rating">';
-			$the_rating .= $ratings[$rating]['html'];
-			$the_rating .= '</div>';
-		}
-
 		$the_date = null;
 		if ( get_post_meta( $post->ID, 'release_date', true ) ) {
 			$release_date = get_post_meta( $post->ID, 'release_date', true );
@@ -419,12 +409,62 @@ class Album_Releases {
 
 		// get the purchase link
 		$purchase_url = null;
-		if ( get_post_meta( $post->ID, 'url_to_buy', true ) ) {
-			$url_to_buy = get_post_meta( $post->ID, 'url_to_buy', true );
-			$purchase_url = '<div class="purchase-link">' . __( 'Purchase this album:' ) . ' ';
-			$purchase_url .= '<a href="' . htmlspecialchars( $url_to_buy ) . '" target="_blank">';
-			$purchase_url .= '<i class="icon-cart"></i>';
-			$purchase_url .= '</a></div>';
+		if ( get_post_meta( $post->ID, 'bandcamp_url', true ) || get_post_meta( $post->ID, 'itunes_url', true ) || get_post_meta( $post->ID, 'spotify_url', true ) || get_post_meta( $post->ID, 'amazonmp3_url', true ) || get_post_meta( $post->ID, 'zune_url', true ) || get_post_meta( $post->ID, 'emusic_url', true ) || get_post_meta( $post->ID, 'napster_url', true ) || get_post_meta( $post->ID, 'rhapsody_url', true ) || get_post_meta( $post->ID, 'reverbnation_buy_url', true ) ) {
+			$bandcamp_url = get_post_meta( $post->ID, 'bandcamp_url', true );
+			$itunes_url = get_post_meta( $post->ID, 'itunes_url', true );
+			$spotify_url = get_post_meta( $post->ID, 'spotify_url', true );
+			$zune_url = get_post_meta( $post->ID, 'zune_url', true );
+			$amazonmp3_url = get_post_meta( $post->ID, 'amazonmp3_url', true );
+			$napster_url = get_post_meta( $post->ID, 'napster_url', true );
+			$emusic_url = get_post_meta( $post->ID, 'emusic_url', true );
+			$reverbnation_buy_url = get_post_meta( $post->ID, 'reverbnation_buy_url', true );
+			$rhapsody_url = get_post_meta( $post->ID, 'rhapsody_url', true );
+			$purchase_url = '<div class="purchase-links">' . __( 'Purchase this album:' ) . ' ';
+			if ( $bandcamp_url ) {
+				$purchase_url .= '<a href="' . htmlspecialchars( $bandcamp_url ) . '" target="_blank">';
+				$purchase_url .= '<i class="icon-bandcamp"></i>';
+				$purchase_url .= '</a></div>';
+			}
+			if ( $itunes_url ) {
+				$purchase_url .= '<a href="' . htmlspecialchars( $itunes_url ) . '" target="_blank">';
+				$purchase_url .= '<i class="icon-itunes"></i>';
+				$purchase_url .= '</a></div>';
+			}
+			if ( $spotify_url ) {
+				$purchase_url .= '<a href="' . htmlspecialchars( $spotify_url ) . '" target="_blank">';
+				$purchase_url .= '<i class="icon-spotify"></i>';
+				$purchase_url .= '</a></div>';
+			}
+			if ( $zune_url ) {
+				$purchase_url .= '<a href="' . htmlspecialchars( $zune_url ) . '" target="_blank">';
+				$purchase_url .= '<i class="icon-zune"></i>';
+				$purchase_url .= '</a></div>';
+			}
+			if ( $amazonmp3_url ) {
+				$purchase_url .= '<a href="' . htmlspecialchars( $amazonmp3_url ) . '" target="_blank">';
+				$purchase_url .= '<i class="icon-amazonmp3"></i>';
+				$purchase_url .= '</a></div>';
+			}
+			if ( $napster_url ) {
+				$purchase_url .= '<a href="' . htmlspecialchars( $napster_url ) . '" target="_blank">';
+				$purchase_url .= '<i class="icon-napster"></i>';
+				$purchase_url .= '</a></div>';
+			}
+			if ( $emusic_url ) {
+				$purchase_url .= '<a href="' . htmlspecialchars( $emusic_url ) . '" target="_blank">';
+				$purchase_url .= '<i class="icon-emusic"></i>';
+				$purchase_url .= '</a></div>';
+			}
+			if ( $rhapsody_url ) {
+				$purchase_url .= '<a href="' . htmlspecialchars( $rhapsody_url ) . '" target="_blank">';
+				$purchase_url .= '<i class="icon-rhapsody"></i>';
+				$purchase_url .= '</a></div>';
+			}
+			if ( $reverbnation_buy_url ) {
+				$purchase_url .= '<a href="' . htmlspecialchars( $reverbnation_buy_url ) . '" target="_blank">';
+				$purchase_url .= '<i class="icon-reverbnation"></i>';
+				$purchase_url .= '</a></div>';
+			}
 		}
 
 		// get the embed code
