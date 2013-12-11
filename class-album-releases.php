@@ -52,8 +52,8 @@ class Album_Releases {
 		add_action( 'init', array( $this, 'releases_taxonomies' ), 0 ); // taxonomy for genre
 		add_action( 'admin_menu', array( $this, 'custom_meta_boxes_releases' ) );
 		add_action( 'save_post', array( $this, 'releases_save_product_postdata' ), 1, 2 ); // save the custom fields
-		add_filter( 'manage_edit-releases_columns', array( $this, 'releases_edit_release_columns' ) );
-		add_action( 'manage_releases_posts_custom_column', array( $this, 'releases_manage_release_columns' ), 10, 2 );
+		add_filter( 'manage_edit-plague-release_columns', array( $this, 'releases_edit_release_columns' ) );
+		add_action( 'manage_plague-release_posts_custom_column', array( $this, 'releases_manage_release_columns' ), 10, 2 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_styles') );
 		// Rename "featured image"
 		add_action('admin_head-post-new.php', array($this, 'change_thumbnail_html'));
@@ -109,12 +109,12 @@ class Album_Releases {
 			'exclude_from_search' => false
 	  );
 
-	  register_post_type( 'releases', $args );
+	  register_post_type( 'plague-release', $args );
 	}
 
 
 	public function releases_taxonomies() {
-		register_taxonomy( 'genre', 'releases', array( 'hierarchical' => true, 'label' => __('Genre', 'plague-releases'), 'query_var' => 'genre', 'rewrite' => array( 'slug' => 'genre' ) ) ); // this is the genre taxonomy for album releases
+		register_taxonomy( 'genre', 'plague-release', array( 'hierarchical' => true, 'label' => __('Genre', 'plague-releases'), 'query_var' => 'genre', 'rewrite' => array( 'slug' => 'genre' ) ) ); // this is the genre taxonomy for album releases
 			$artist_labels = array(
 				'name' => __( 'Artists', 'plague-releases' ),
 				'singular_name' => __( 'Artists', 'plague-releases' ),
@@ -125,15 +125,15 @@ class Album_Releases {
 				'add_new_item' => __( 'Add New Artist', 'plague-releases' ),
 				'new_item_name' => __( 'New Artist Name', 'plague-releases' ),
 			);
-		register_taxonomy( 'artist', 'releases', array( 'hierarchical' => true, 'labels' => $artist_labels, 'query_var' => 'artist', 'rewrite' => array( 'slug' => 'artist' ) ) ); // this is the artist taxonomy for releases
+		register_taxonomy( 'artist', 'plague-release', array( 'hierarchical' => true, 'labels' => $artist_labels, 'query_var' => 'artist', 'rewrite' => array( 'slug' => 'artist' ) ) ); // this is the artist taxonomy for releases
 		}
 
 
 	/* create custom meta boxes */
 
 	public function custom_meta_boxes_releases() {
-	    add_meta_box("releases-details",  __( "Album Details", 'plague-releases' ),  array( $this, "meta_cpt_releases" ), "releases", "normal", "low");
-		add_meta_box("releases-buy", __( "Purchase Links", 'plague-releases' ), array( $this, "meta_cpt_releases_buy" ),"releases","side","low");
+	    add_meta_box("releases-details",  __( "Album Details", 'plague-releases' ),  array( $this, "meta_cpt_releases" ), "plague-release", "normal", "low");
+		add_meta_box("releases-buy", __( "Purchase Links", 'plague-releases' ), array( $this, "meta_cpt_releases_buy" ),"plague-release","side","low");
 	}
 
 	public function meta_cpt_releases() {
@@ -203,8 +203,8 @@ class Album_Releases {
 	}
 
 	public function rebuild_thumbnail_metabox() {
-		remove_meta_box( 'postimagediv', 'releases', 'side' );
-    	add_meta_box('postimagediv', __('Album Cover', 'plague-releases'), 'post_thumbnail_meta_box', 'releases', 'side', 'default');
+		remove_meta_box( 'postimagediv', 'plague-release', 'side' );
+    	add_meta_box('postimagediv', __('Album Cover', 'plague-releases'), 'post_thumbnail_meta_box', 'plague-release', 'side', 'default');
 	}
 
 	/**
@@ -213,7 +213,7 @@ class Album_Releases {
 	 * @since 	2.0.0
 	 */
 	public function change_thumbnail_html( $content ) {
-	    if ('releases' == $GLOBALS['post_type'])
+	    if ('plague-release' == $GLOBALS['post_type'])
 	      add_filter('admin_post_thumbnail_html', array($this,'do_thumb'));
 	}
 
@@ -477,20 +477,20 @@ class Album_Releases {
 		}
 
 		// get the review meta
-		$review_meta = null;
+		$release_meta = null;
 		if ( $genre_list || $label_list ) {
-			$review_meta = '<div class="review-meta">';
+			$release_meta = '<div class="release-meta">';
 			if ( $label_list ) {
-				$review_meta .= '<span class="label">';
-				$review_meta .= $label_list;
-				$review_meta .= '</span><br />';
+				$release_meta .= '<span class="label">';
+				$release_meta .= $label_list;
+				$release_meta .= '</span><br />';
 			}
 			if ( $genre_list ) {
-				$review_meta .= '<span class="genres">';
-				$review_meta .= $genre_list;
-				$review_meta .= '</span>';
+				$release_meta .= '<span class="genres">';
+				$release_meta .= $genre_list;
+				$release_meta .= '</span>';
 			}
-			$review_meta .= '</div>';
+			$release_meta .= '</div>';
 		}
 
 		// get the track list
@@ -502,11 +502,11 @@ class Album_Releases {
 			$the_tracklist .= '</div>';
 		}
 
-		$before_content = '<div class="review-entry">';
+		$before_content = '<div class="release-entry">';
 		$after_content = '</div>';
 
-		if ( 'album-review' == get_post_type() && in_the_loop() && is_singular() ) {
-			return $thumbnail . $entry_open . $the_artist . $the_rating . $the_date . $before_content . $content . $after_content . $purchase_url . $the_tracklist . $entry_close . $embed_code . $review_meta;
+		if ( 'plague-release' == get_post_type() && in_the_loop() && is_singular() ) {
+			return $thumbnail . $entry_open . $the_artist . $the_rating . $the_date . $before_content . $content . $after_content . $purchase_url . $the_tracklist . $entry_close . $embed_code . $release_meta;
 		} else {
 			return $content;
 		}
