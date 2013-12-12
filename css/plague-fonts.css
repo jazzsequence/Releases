@@ -1,3 +1,4 @@
+
 @charset "UTF-8";
 
 @font-face {
@@ -25,8 +26,8 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-[class^="icon-"]:before,
-[class*=" icon-"]:before {
+[class^="plague-i-"]:before,
+[class*=" plague-i-"]:before {
   font-family: "plague-fonts" !important;
   font-style: normal !important;
   font-weight: normal !important;
@@ -39,106 +40,107 @@
 }
 
 
-.icon-myspace:before {
+.plague-i-myspace:before {
   content: "\e000";
 }
 
-.icon-soundcloud:before {
+.plague-i-soundcloud:before {
   content: "\e001";
 }
 
-.icon-spotify:before {
+.plague-i-spotify:before {
   content: "\e002";
 }
 
-.icon-alonetone:before {
+.plague-i-alonetone:before {
   content: "\e003";
 }
 
-.icon-amazonmp3:before {
+.plague-i-amazonmp3:before {
   content: "\e004";
 }
 
-.icon-bandcamp:before {
+.plague-i-bandcamp:before {
   content: "\e005";
 }
 
-.icon-emusic:before {
+.plague-i-emusic:before {
   content: "\e006";
 }
 
-.icon-archive:before {
+.plague-i-archive:before {
   content: "\e007";
 }
 
-.icon-itunes:before {
+.plague-i-itunes:before {
   content: "\e008";
 }
 
-.icon-napster:before {
+.plague-i-napster:before {
   content: "\e009";
 }
 
-.icon-rhapsody:before {
+.plague-i-rhapsody:before {
   content: "\e00a";
 }
 
-.icon-rpm:before {
+.plague-i-rpm:before {
   content: "\e00b";
 }
 
-.icon-reverbnation:before {
+.plague-i-reverbnation:before {
   content: "\e00c";
 }
 
-.icon-zune:before {
+.plague-i-zune:before {
   content: "\e00d";
 }
 
-.icon-star:before {
+.plague-i-star:before {
   content: "\e00e";
 }
 
-.icon-microphone:before {
+.plague-i-microphone:before {
   content: "\e00f";
 }
 
-.icon-music:before {
+.plague-i-music:before {
   content: "\e010";
 }
 
-.icon-cart:before {
+.plague-i-cart:before {
   content: "\e011";
 }
 
-.icon-link:before {
+.plague-i-link:before {
   content: "\e012";
 }
 
-.icon-facebook:before {
+.plague-i-facebook:before {
   content: "\e013";
 }
 
-.icon-google:before {
+.plague-i-google:before {
   content: "\e014";
 }
 
-.icon-youtube:before {
+.plague-i-youtube:before {
   content: "\e015";
 }
 
-.icon-twitter:before {
+.plague-i-twitter:before {
   content: "\e016";
 }
 
-.icon-headphones:before {
+.plague-i-headphones:before {
   content: "\e017";
 }
 
-.icon-download:before {
+.plague-i-download:before {
   content: "\e018";
 }
 
-.icon-quote:before {
+.plague-i-quote:before {
   content: "\e019";
 }
+
