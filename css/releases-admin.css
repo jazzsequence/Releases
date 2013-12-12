@@ -2,10 +2,10 @@
 	background: #fff;
 }
 
-#menu-posts-releases .wp-menu-image {
+#menu-posts-plague-release .wp-menu-image {
 	background: none!important;
 }
-#menu-posts-releases .wp-menu-image:before {
+#menu-posts-plague-release .wp-menu-image:before {
 	font-family: 'plague-fonts'!important;
 	content: "\e010";
 	font-size: 20px;
@@ -15,19 +15,19 @@
 	text-shadow: 1px 1px 0px #eee;
 	color: #aaa;
 }
-#menu-posts-releases:hover .wp-menu-image:before {
+#menu-posts-plague-release:hover .wp-menu-image:before {
 	color: #21759b;
 }
-.wp-has-current-submenu#menu-posts-releases .wp-menu-image:before {
+.wp-has-current-submenu#menu-posts-plague-release .wp-menu-image:before {
 	color: #eee;
 }
-.wp-has-current-submenu#menu-posts-releases .wp-menu-image:before {
+.wp-has-current-submenu#menu-posts-plague-release .wp-menu-image:before {
 	text-shadow: 1px 1px 0px #555;
 }
-div#icon-edit.icon32-posts-releases {
+div#icon-edit.icon32-posts-plague-release {
 	background-image: none;
 }
-div#icon-edit.icon32-posts-releases:after {
+div#icon-edit.icon32-posts-plague-release:after {
 	font-family: 'plague-fonts'!important;
 	content: "\e010";
 	color: #555;
@@ -36,7 +36,7 @@ div#icon-edit.icon32-posts-releases:after {
 	top: -5px;
 }
 
-.mp6 #adminmenu #menu-posts-releases div.wp-menu-image:before {
+.mp6 #adminmenu #menu-posts-plague-release div.wp-menu-image:before {
 	font-family: 'plague-fonts'!important;
 	content: "\e010";
 	left: 0;
