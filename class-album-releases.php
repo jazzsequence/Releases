@@ -432,52 +432,52 @@ class Album_Releases {
 			$purchase_url = '<div class="purchase-links">' . __( 'Download this album:', 'plague-releases' ) . ' ';
 			if ( $bandcamp_url ) {
 				$purchase_url .= '<a href="' . htmlspecialchars( $bandcamp_url ) . '" target="_blank">';
-				$purchase_url .= '<i class="icon-bandcamp"></i>';
+				$purchase_url .= '<i class="plague-i-bandcamp"></i>';
 				$purchase_url .= '</a>`';
 			}
 			if ( $itunes_url ) {
 				$purchase_url .= '<a href="' . htmlspecialchars( $itunes_url ) . '" target="_blank">';
-				$purchase_url .= '<i class="icon-itunes"></i>';
+				$purchase_url .= '<i class="plague-i-itunes"></i>';
 				$purchase_url .= '</a>';
 			}
 			if ( $spotify_url ) {
 				$purchase_url .= '<a href="' . htmlspecialchars( $spotify_url ) . '" target="_blank">';
-				$purchase_url .= '<i class="icon-spotify"></i>';
+				$purchase_url .= '<i class="plague-i-spotify"></i>';
 				$purchase_url .= '</a>';
 			}
 			if ( $zune_url ) {
 				$purchase_url .= '<a href="' . htmlspecialchars( $zune_url ) . '" target="_blank">';
-				$purchase_url .= '<i class="icon-zune"></i>';
+				$purchase_url .= '<i class="plague-i-zune"></i>';
 				$purchase_url .= '</a>';
 			}
 			if ( $amazonmp3_url ) {
 				$purchase_url .= '<a href="' . htmlspecialchars( $amazonmp3_url ) . '" target="_blank">';
-				$purchase_url .= '<i class="icon-amazonmp3"></i>';
+				$purchase_url .= '<i class="plague-i-amazonmp3"></i>';
 				$purchase_url .= '</a>';
 			}
 			if ( $napster_url ) {
 				$purchase_url .= '<a href="' . htmlspecialchars( $napster_url ) . '" target="_blank">';
-				$purchase_url .= '<i class="icon-napster"></i>';
+				$purchase_url .= '<i class="plague-i-napster"></i>';
 				$purchase_url .= '</a>';
 			}
 			if ( $emusic_url ) {
 				$purchase_url .= '<a href="' . htmlspecialchars( $emusic_url ) . '" target="_blank">';
-				$purchase_url .= '<i class="icon-emusic"></i>';
+				$purchase_url .= '<i class="plague-i-emusic"></i>';
 				$purchase_url .= '</a>';
 			}
 			if ( $rhapsody_url ) {
 				$purchase_url .= '<a href="' . htmlspecialchars( $rhapsody_url ) . '" target="_blank">';
-				$purchase_url .= '<i class="icon-rhapsody"></i>';
+				$purchase_url .= '<i class="plague-i-rhapsody"></i>';
 				$purchase_url .= '</a>';
 			}
 			if ( $reverbnation_buy_url ) {
 				$purchase_url .= '<a href="' . htmlspecialchars( $reverbnation_buy_url ) . '" target="_blank">';
-				$purchase_url .= '<i class="icon-reverbnation"></i>';
+				$purchase_url .= '<i class="plague-i-reverbnation"></i>';
 				$purchase_url .= '</a>';
 			}
 			if ( $internet_archive ) {
 				$purchase_url .= '<a href="http://archive.org/details/' . htmlspecialchars( $internet_archive ) . '" target="_blank">';
-				$purchase_url .= '<i class="icon-archive"></i>';
+				$purchase_url .= '<i class="plague-i-archive"></i>';
 				$purchase_url .= '</a>';
 			}
 			$purchase_url .= '</div>';
