@@ -160,7 +160,7 @@ class Album_Releases {
 		echo '<textarea class="widefat" rows="5" cols="50" name="embed_code" />'. wp_kses( get_post_meta( $post->ID, 'embed_code', true ), $kses_allowed ) . '</textarea></p>';
 
 		echo '<p><label for="release_date">' . __( 'Album Release Date', 'plague-releases' ) . '</label><br />';
-		echo '<input class="widefat" type="text" name="release_date" value="' . wp_kses_post( get_post_meta($post->ID, 'release_date', true ) ) . '" /></p>';
+		echo '<input class="widefat" type="text" id="datepicker" name="release_date" value="' . wp_kses_post( get_post_meta($post->ID, 'release_date', true ) ) . '" /></p>';
 		echo '<p><label for="plague_release_number">' . __( 'Release Number <em>(if applicable)</em>', 'plague-releases' ) . '</label><br />';
 		echo '<input class="widefat" type="text" name="plague_release_number" value="' . wp_kses( get_post_meta( $post->ID, 'plague_release_number', true ), array() ) . '" /></p>';
 
@@ -349,6 +349,8 @@ class Album_Releases {
 	public function admin_styles() {
 		wp_enqueue_style( 'plague-fonts', plugins_url( 'css/plague-fonts.css', __FILE__ ), array(), $this->version );
 		wp_enqueue_style( 'releases-admin-css', plugins_url( 'css/releases-admin.css', __FILE__ ), array(), $this->version );
+		wp_enqueue_script( 'jquery-ui-datepicker' );
+		wp_enqueue_script( 'plague-releases-js', plugins_url( 'js/admin.js', __FILE__ ), array( 'jquery-ui-datepicker' ), '1.0' );
 	}
 
 	public function filter_release_content( $content ) {
