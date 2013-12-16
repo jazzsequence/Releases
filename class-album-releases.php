@@ -519,7 +519,7 @@ class Album_Releases {
 		$before_content = '<div class="release-entry row">';
 		$after_content = '</div>';
 
-		if ( 'plague-release' == get_post_type() && in_the_loop() && is_singular() ) {
+		if ( 'plague-release' == get_post_type() && in_the_loop() && is_single($post->ID) ) {
 			return $entry_open . $the_artist . $thumbnail . $the_date . $the_release_number . $before_content . $content . $after_content . $purchase_url . $entry_close . $the_tracklist . $embed_code . $release_meta;
 		} else {
 			return $content;
