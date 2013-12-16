@@ -360,7 +360,7 @@ class Album_Releases {
 
 		// get the artist(s)
 		if ( get_the_artist_list() ) {
-			$artist_list = get_the_artist_list();
+			$artist_list = get_the_artists();
 		} else {
 			$artist_list = null;
 		}
@@ -511,6 +511,7 @@ class Album_Releases {
 		if ( get_post_meta( $post->ID, 'tracklist', true ) ) {
 			$tracklist = get_post_meta( $post->ID, 'tracklist', true );
 			$the_tracklist = '<div class="tracklist">';
+			$the_tracklist .= '<label for="tracklist">' . __( 'Track list:', 'plague-releases' ) . '</label><br />';
 			$the_tracklist .= wp_kses_post( $tracklist );
 			$the_tracklist .= '</div>';
 		}
