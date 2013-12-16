@@ -360,9 +360,14 @@ class Album_Releases {
 
 		// get the artist(s)
 		if ( get_the_artist_list() ) {
-			$artist_list = get_the_artists();
+			$artist_list = get_the_artist_list();
 		} else {
 			$artist_list = null;
+		}
+		if ( get_the_artists() ) {
+			$artists = get_the_artists();
+		} else {
+			$artists = null;
 		}
 
 		// get the genres
@@ -384,9 +389,9 @@ class Album_Releases {
 
 		// the artist for output
 		$the_artist = null;
-		if ( $artist_list ) {
+		if ( $artists ) {
 			$the_artist = '<div class="the_artist">';
-			$the_artist .= $artist_list;
+			$the_artist .= $artists;
 			$the_artist .= '</div>';
 		}
 
@@ -520,7 +525,7 @@ class Album_Releases {
 		$after_content = '</div>';
 
 		if ( 'plague-release' == get_post_type() && in_the_loop() && is_singular() ) {
-			return $thumbnail . $entry_open . $the_artist . $the_date . $before_content . $content . $after_content . $purchase_url . $the_tracklist . $entry_close . $embed_code . $release_meta;
+			return $thumbnail . $entry_open . $the_artist . $the_date . $the_rel . $before_content . $content . $after_content . $purchase_url . $the_tracklist . $entry_close . $embed_code . $release_meta;
 		} else {
 			return $content;
 		}
