@@ -59,6 +59,8 @@ class Album_Releases {
 		add_action('admin_head-post-new.php', array($this, 'change_thumbnail_html'));
 		add_action('admin_head-post.php', array($this, 'change_thumbnail_html'));
 		add_action( 'add_meta_boxes', array( $this, 'rebuild_thumbnail_metabox' ) );
+		// add content filter for releases
+		add_filter( 'the_content', array( $this, 'filter_release_content' ) );
 	}
 
 	/**
@@ -517,7 +519,7 @@ class Album_Releases {
 		$after_content = '</div>';
 
 		if ( 'plague-release' == get_post_type() && in_the_loop() && is_singular() ) {
-			return $thumbnail . $entry_open . $the_artist . $the_rating . $the_date . $before_content . $content . $after_content . $purchase_url . $the_tracklist . $entry_close . $embed_code . $release_meta;
+			return $thumbnail . $entry_open . $the_artist . $the_date . $before_content . $content . $after_content . $purchase_url . $the_tracklist . $entry_close . $embed_code . $release_meta;
 		} else {
 			return $content;
 		}
