@@ -36,7 +36,7 @@ div#icon-edit.icon32-posts-plague-release:after {
 	top: -5px;
 }
 
-.mp6 #adminmenu #menu-posts-plague-release div.wp-menu-image:before {
+.branch-3-8 #adminmenu #menu-posts-plague-release div.wp-menu-image:before {
 	font-family: 'plague-fonts'!important;
 	content: "\e010";
 	left: 0;
