@@ -435,7 +435,7 @@ class Album_Releases {
 			if ( $bandcamp_url ) {
 				$purchase_url .= '<a href="' . htmlspecialchars( $bandcamp_url ) . '" target="_blank">';
 				$purchase_url .= '<i class="plague-i-bandcamp"></i>';
-				$purchase_url .= '</a>`';
+				$purchase_url .= '</a>';
 			}
 			if ( $itunes_url ) {
 				$purchase_url .= '<a href="' . htmlspecialchars( $itunes_url ) . '" target="_blank">';
