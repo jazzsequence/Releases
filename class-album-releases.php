@@ -377,14 +377,7 @@ class Album_Releases {
 			$genre_list = null;
 		}
 
-		// get the label(s)
-		if ( get_the_labels() ) {
-			$label_list = get_the_labels();
-		} else {
-			$label_list = null;
-		}
-
-		$entry_open = '<div class="alignleft entry-content">';
+		$entry_open = '<div class="entry-content">';
 		$entry_close = '</div>';
 
 		// the artist for output
@@ -407,7 +400,8 @@ class Album_Releases {
 		if ( get_post_meta( $post->ID, 'plague_release_number', true ) ) {
 			$release_number = get_post_meta( $post->ID, 'plague_release_number', true );
 			$the_release_number = '<div class="release-number">';
-			$the_release_number .= sprintf( '%1$s' . __( 'Release Number:', 'plague-releases' ) . '%2$s %3$s', '%2$s %3$s', '<label for="release-number">', '</label>', strip_tags( $release_number ) );
+			$the_release_number .= sprintf( '%1$s' . __( 'Release Number:', 'plague-releases' ) . '%2$s %3$s', '<label for="release-number">', '</label>', strip_tags( $release_number ) );
+			$the_release_number .= '</div><!-- end release number -->';
 		}
 
 		// get the thumbnail
@@ -418,7 +412,7 @@ class Album_Releases {
 			$thumbnail_url = $the_thumbnail['0'];
 			$thumbnail_full_url = $the_full_thumbnail['0'];
 
-			$thumbnail = '<div class="thumbnail alignleft">';
+			$thumbnail = '<div class="thumbnail alignleft pull-left">';
 			$thumbnail .= '<a href="'. htmlspecialchars( $thumbnail_full_url ) . '"><img src="' . $thumbnail_url . '" alt="' . $artist_list . ' - ' . get_the_title( $post->ID ) . '" /></a>';
 			$thumbnail .= '</div>';
 		}
@@ -501,10 +495,11 @@ class Album_Releases {
 
 		// get the review meta
 		$release_meta = null;
-		if ( $genre_list || $label_list ) {
+		if ( $genre_list ) {
 			$release_meta = '<div class="release-meta">';
 			if ( $genre_list ) {
 				$release_meta .= '<span class="genres">';
+				$release_meta .= '<label for="genre-list">' . __( 'Genres:', 'plague-releases' ) . '</label>&nbsp;';
 				$release_meta .= $genre_list;
 				$release_meta .= '</span>';
 			}
@@ -521,11 +516,11 @@ class Album_Releases {
 			$the_tracklist .= '</div>';
 		}
 
-		$before_content = '<div class="release-entry">';
+		$before_content = '<div class="release-entry row">';
 		$after_content = '</div>';
 
 		if ( 'plague-release' == get_post_type() && in_the_loop() && is_singular() ) {
-			return $thumbnail . $entry_open . $the_artist . $the_date . $the_rel . $before_content . $content . $after_content . $purchase_url . $the_tracklist . $entry_close . $embed_code . $release_meta;
+			return $entry_open . $the_artist . $thumbnail . $the_date . $the_release_number . $before_content . $content . $after_content . $purchase_url . $entry_close . $the_tracklist . $embed_code . $release_meta;
 		} else {
 			return $content;
 		}
