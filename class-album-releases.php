@@ -313,6 +313,28 @@ class Album_Releases {
 	public function releases_manage_release_columns( $column, $post_id ) {
 		global $post;
 		switch ( $column ) {
+			case 'artist' :
+				$terms = get_the_terms( $post_id, 'artist' );
+				if ( !empty( $terms ) ) {
+					$out = array();
+
+					/* Loop through each term, linking to the 'edit posts' page for the specific term */
+					foreach ( $terms as $term ) {
+						$out[] = sprintf( '<a href="%s">%s</a>',
+							esc_url( add_query_arg( array( 'post_type' => $post->post_type, 'artist' => $term->slug ), 'edit.php' ) ),
+							esc_html( sanitize_term_field( 'name', $term->name, $term->term_id, 'artist', 'display' ) )
+						);
+					}
+
+					/* Join the terms, separating them with a comma. */
+					echo join( ', ', $out );
+				}
+				/* If no terms were found, output a default message. */
+				else {
+					_e( 'No artists', 'plague-releases' );
+				}
+
+				break;
 			case 'release_date' :
 				$release_date = get_post_meta( $post_id, 'release_date', true);
 				printf( $release_date );
