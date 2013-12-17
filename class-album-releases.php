@@ -47,6 +47,7 @@ class Album_Releases {
 	 * @since     2.0.0
 	 */
 	private function __construct() {
+		global $is_apache;
 		// all the actions go here
 		add_action( 'init', array( $this, 'post_type_releases' ), 0 );
 		add_action( 'init', array( $this, 'releases_taxonomies' ), 0 ); // taxonomy for genre
@@ -62,8 +63,11 @@ class Album_Releases {
 		// add content filter for releases
 		add_filter( 'the_content', array( $this, 'filter_release_content' ) );
 		// deal with permalink stuff
-		add_filter('post_type_link', array( $this, 'filter_release_permalink' ), 10, 3);
-		add_action( 'init', array( $this, 'release_permastruct' ) );
+		if ( true == $is_apache ) {
+			// only do this if we're on an apache server
+			add_filter('post_type_link', array( $this, 'filter_release_permalink' ), 10, 3);
+			add_action( 'init', array( $this, 'release_permastruct' ) );
+		}
 	}
 
 	/**
@@ -85,6 +89,12 @@ class Album_Releases {
 
 	/* create the custom post type */
 	public function post_type_releases() {
+		global $is_apache;
+		if ( true == $is_apache ) {
+			$rewrite = false;
+		} else {
+			$rewrite = array( 'slug' => 'album' );
+		}
 	    $labels = array(
 			'name' => __('Releases', 'plague-releases'),
 			'singular_name' => __('Album', 'plague-releases'),
@@ -106,7 +116,7 @@ class Album_Releases {
 			'publicly_queryable' => true,
 			'show_ui' => true,
 			'query_var' => true,
-			'rewrite' => false,
+			'rewrite' => $rewrite,
 			'capability_type' => 'post',
 			'hierarchical' => false,
 			'menu_position' => null,
