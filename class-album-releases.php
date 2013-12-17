@@ -337,8 +337,8 @@ class Album_Releases {
 	public function releases_edit_release_columns( $columns ) {
 		$columns = array(
 			'cb' => '<input type="checkbox" />',
-			'artist' => __( 'Artist(s)', 'plague-releases' ),
 			'title' => __( 'Album', 'plague-releases' ),
+			'artist' => __( 'Artist(s)', 'plague-releases' ),
 			'release_date' => __( 'Release Date', 'plague-releases' ),
 			'genre' => __( 'Genre', 'plague-releases' ),
 			'plague_release_number' => __( 'Release Number', 'plague-releases' )
