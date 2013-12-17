@@ -83,9 +83,9 @@ class Album_Releases {
 	/* create the custom post type */
 	public function post_type_releases() {
 	    $labels = array(
-			'name' => _x('Releases', 'post type general name', 'plague-releases'),
-			'singular_name' => _x('Album', 'post type singular name', 'plague-releases'),
-			'add_new' => _x('Add New', 'product', 'plague-releases'),
+			'name' => __('Releases', 'plague-releases'),
+			'singular_name' => __('Album', 'plague-releases'),
+			'add_new' => __('Add New', 'plague-releases'),
 			'add_new_item' => __('Add New Album', 'plague-releases'),
 			'edit_item' => __('Edit Album', 'plague-releases'),
 			'edit' => __('Edit', 'plague-releases'),
@@ -297,10 +297,11 @@ class Album_Releases {
 	public function releases_edit_release_columns( $columns ) {
 		$columns = array(
 			'cb' => '<input type="checkbox" />',
-			'title' => 'Album Release',
-			'release_date' => 'Release Date',
-			'genre' => 'Genre',
-			'plague_release_number' => 'Release Number'
+			'artist' => __( 'Artist(s)', 'plague-releases' ),
+			'title' => __( 'Album', 'plague-releases' ),
+			'release_date' => __( 'Release Date', 'plague-releases' ),
+			'genre' => __( 'Genre', 'plague-releases' ),
+			'plague_release_number' => __( 'Release Number', 'plague-releases' )
 		);
 		return $columns;
 	}
@@ -338,7 +339,7 @@ class Album_Releases {
 
 				/* If no terms were found, output a default message. */
 				else {
-					_e( 'No Genres' );
+					_e( 'No Genres', 'plague-releases' );
 				}
 
 				break;
