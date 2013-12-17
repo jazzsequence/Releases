@@ -116,7 +116,10 @@ class Album_Releases {
 
 
 	public function releases_taxonomies() {
-		register_taxonomy( 'genre', 'plague-release', array( 'hierarchical' => true, 'label' => __('Genre', 'plague-releases'), 'query_var' => 'genre', 'rewrite' => array( 'slug' => 'genre' ) ) ); // this is the genre taxonomy for album releases
+		if ( !taxonomy_exists( 'genre' ) ) {
+			register_taxonomy( 'genre', 'plague-release', array( 'hierarchical' => true, 'label' => __('Genre', 'plague-releases'), 'query_var' => 'genre', 'rewrite' => array( 'slug' => 'genre' ) ) ); // this is the genre taxonomy for album releases
+		}
+		if ( !taxonomy_exists( 'artist' ) ) {
 			$artist_labels = array(
 				'name' => __( 'Artists', 'plague-releases' ),
 				'singular_name' => __( 'Artists', 'plague-releases' ),
