@@ -61,6 +61,9 @@ class Album_Releases {
 		add_action( 'add_meta_boxes', array( $this, 'rebuild_thumbnail_metabox' ) );
 		// add content filter for releases
 		add_filter( 'the_content', array( $this, 'filter_release_content' ) );
+		// deal with permalink stuff
+		add_filter('post_type_link', array( $this, 'filter_release_permalink' ), 10, 3);
+		add_action( 'init', array( $this, 'release_permastruct' ) );
 	}
 
 	/**
@@ -103,7 +106,7 @@ class Album_Releases {
 			'publicly_queryable' => true,
 			'show_ui' => true,
 			'query_var' => true,
-			'rewrite' => array("slug" => "album"),
+			'rewrite' => false,
 			'capability_type' => 'post',
 			'hierarchical' => false,
 			'menu_position' => null,
@@ -130,8 +133,42 @@ class Album_Releases {
 				'add_new_item' => __( 'Add New Artist', 'plague-releases' ),
 				'new_item_name' => __( 'New Artist Name', 'plague-releases' ),
 			);
-		register_taxonomy( 'artist', 'plague-release', array( 'hierarchical' => true, 'labels' => $artist_labels, 'query_var' => 'artist', 'rewrite' => array( 'slug' => 'artist' ) ) ); // this is the artist taxonomy for releases
+			register_taxonomy( 'artist', 'plague-release', array( 'hierarchical' => true, 'labels' => $artist_labels, 'query_var' => 'artist', 'rewrite' => array( 'slug' => 'artist' ) ) ); // this is the artist taxonomy for releases
 		}
+	}
+
+	public function filter_release_permalink($url, $post_id, $leavename) {
+		if (strpos($url, '%artist%') === FALSE) return $url;
+
+		$permalink = null;
+		// Get post
+		$post = get_post($post_id);
+		if (!$post) return $url;
+
+		// Get taxonomy terms
+		$terms = get_the_terms($post_id, 'artist');
+		if (!is_wp_error($terms) && !empty($terms)) {
+			foreach ( $terms as $term ) {
+				$taxonomy_slug = $term->slug;
+			}
+		}
+		else {
+			$taxonomy_slug = 'no-artist';
+		}
+
+		// $permalink_structure = str_replace('%artist%', $taxonomy_slug, $permalink_structure);
+
+		$permalink = str_replace( array( '%artist%', '%postname%' ), array( $taxonomy_slug, $post->post_name ), $url );
+
+		return $permalink;
+	}
+
+	public function release_permastruct() {
+		global $wp_rewrite;
+		$permalink_structure = '/album/%artist%/%postname%/';
+		$wp_rewrite->add_rewrite_tag("%postname%", '([^/]+)', "plague-release=");
+		$wp_rewrite->add_permastruct('plague-release', $permalink_structure, false);
+	}
 
 
 	/* create custom meta boxes */
