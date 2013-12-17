@@ -513,7 +513,7 @@ class Album_Releases {
 			$tracklist = get_post_meta( $post->ID, 'tracklist', true );
 			$the_tracklist = '<div class="tracklist">';
 			$the_tracklist .= '<label for="tracklist">' . __( 'Track list:', 'plague-releases' ) . '</label><br />';
-			$the_tracklist .= wp_kses_post( $tracklist );
+			$the_tracklist .= wpautop(wp_kses_post( $tracklist ));
 			$the_tracklist .= '</div>';
 		}
 
